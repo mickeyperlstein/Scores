@@ -15,23 +15,30 @@ namespace RabbitSportsScores
         {
             // Recieve rec = new Recieve("localhost","hello");
 
-            //using (var db = new Model1Container())
-            //{
-            //    db.GameEntities.Add(new GameEntity
-            //    {
-            //        CompetitonName = "name",
-            //        GameStart = DateTime.Now,
+            using (var db = new ScoresDBEntities())
+            {
+                var game =
+                    new Game
+                {
+                    CompetitionName = "name",
+                    MatchStart = DateTime.Now,
 
-            //        LastUpdatedOn = DateTime.UtcNow
-            //        ,
-            //        Team1 = "team1",
-            //        Team2 = "team2",
-            //        TypeOfGame = "soccer"
-            //    });
+                    LastUpdatedOn = DateTime.UtcNow
+                    ,
+                    Team1 = "team1",
+                    Team2 = "team2",
+                    SportType = "soccer"
+                    , Id = 0
+                };
 
-            //    db.SaveChanges();
+                db.Games.Add(game);
 
-            //}
+
+                var err = db.GetValidationErrors();
+
+                db.SaveChanges();
+
+            }
 
 
 

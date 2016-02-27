@@ -12,7 +12,7 @@ namespace ScrapingSendingTester
         {
             var sc = new Scraper(new SeleniumScrapper());
             sc.Scrape("http://www.livesport.co.uk/");
-            var list = sc.Tags;
+            var list = sc.Games;
 
         }
 

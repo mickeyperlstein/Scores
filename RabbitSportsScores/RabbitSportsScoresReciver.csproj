@@ -148,11 +148,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DB\ScoresDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="DB\ScoresDB.mdf" />
     <Content Include="DB\ScoresDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>ScoresDB.mdf</DependentUpon>
     </Content>
     <Content Include="ScoresDB.mdf">

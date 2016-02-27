@@ -12,13 +12,13 @@ namespace ScoresPublisher
         private IScrapingProvider scProvider;
         public Scraper(IScrapingProvider provider)
         {
-            this.Tags = new List<Game>();
+            this.Games = new List<GameDBO>();
 
             this.scProvider = provider;
 
 
         }
-        public List<Game> Tags { get; set; }
+        public List<GameDBO> Games { get; set; }
 
         public void Scrape(string url)
         {
@@ -73,18 +73,18 @@ namespace ScoresPublisher
                    .Select(xx=> ParseGameData(xx))
                    .ToList();
 
-               this.Tags = gg.SelectMany(x => x).ToList();
+               this.Games = gg.SelectMany(x => x).ToList();
 
            
         }
 
-        private List<Game> ParseGameData(List<string> partiallyParsed)
+        private List<GameDBO> ParseGameData(List<string> partiallyParsed)
         {
 
             string competition = partiallyParsed[0];
             int current = 1;
 
-            List<Game> listOut = new List<Game>();
+            List<GameDBO> listOut = new List<GameDBO>();
             
 
             while (current < partiallyParsed.Count)
@@ -107,7 +107,7 @@ namespace ScoresPublisher
                 if (DateTime.TryParse(time_text, out date))
                 {
 
-                var retGame = new Game
+                var retGame = new GameDBO
                 {
                     Start = date,
                     CompetitionName = competition,

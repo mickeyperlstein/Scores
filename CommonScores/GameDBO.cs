@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ScoresPublisher
 {
-    public class Game
+    public class GameDBO
     {   
         public int Id { get; set; }
         public DateTime Start { get; set; }

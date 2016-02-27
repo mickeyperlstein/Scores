@@ -15,7 +15,7 @@ namespace ScoresPublisher
 
             var sc = new Scraper(new SeleniumScrapper());
             sc.Scrape("http://futbolme.com/");
-            var list = sc.Tags;
+            var list = sc.Games;
 
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
