@@ -78,9 +78,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converter.cs" />
     <Compile Include="DB\Game.cs">
       <DependentUpon>Matches.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\GameComparer.cs" />
     <Compile Include="DB\Matches.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,6 +98,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Matches.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\ScoresDbEntitiesExtended.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recieve.cs" />
@@ -148,10 +151,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DB\ScoresDB.mdf" />
-    <Content Include="DB\ScoresDB_log.ldf">
-      <DependentUpon>ScoresDB.mdf</DependentUpon>
-    </Content>
+    <Content Include="DB\Matches.edmx.sql" />
     <Content Include="ScoresDB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
