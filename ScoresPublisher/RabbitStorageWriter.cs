@@ -1,5 +1,5 @@
 ﻿using DataLayer;
-using log4net.Config;
+
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System;
@@ -24,7 +24,7 @@ namespace Storage.Rabbit
         }
             public RabbitStorageWriter():base()
             {
-                XmlConfigurator.Configure();
+                log4net.Config.XmlConfigurator.Configure();
                 this.log = log4net.LogManager.GetLogger(this.GetType());
            
             }

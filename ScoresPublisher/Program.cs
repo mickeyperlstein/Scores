@@ -15,7 +15,9 @@ namespace ScoresPublisher
     {
         static void Main(string[] args)
         {
-
+            log4net.Config.XmlConfigurator.Configure();
+            var log = log4net.LogManager.GetLogger("main");
+ 
 
             ConsoleUtils.Title("Games Scraper and PERSISTER");
             Console.WriteLine("Scraping initialized"); 
@@ -32,6 +34,7 @@ namespace ScoresPublisher
                 storage.PushedMessage += storage_PushedMessage;
                 storage.WriteAll(list);
                 Console.WriteLine("Sleeping for 15 min");
+                log.Debug("Sleeping for 15 min");
                 Thread.Sleep(1000 * 60 * 15);
             }
 

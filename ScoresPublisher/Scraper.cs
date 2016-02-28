@@ -1,20 +1,26 @@
 ﻿using DataLayer;
+using log4net.Config;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ScoresPublisher
 {
     public class Scraper
     {
         private IScrapingProvider scProvider;
+        protected  log4net.ILog log;
         public Scraper(IScrapingProvider provider)
         {
             this.Games = new List<GameDBO>();
 
             this.scProvider = provider;
+
+            XmlConfigurator.Configure();
+            this.log = log4net.LogManager.GetLogger(this.GetType());
 
 
         }
@@ -22,9 +28,10 @@ namespace ScoresPublisher
 
         public void Scrape(string url)
         {
+            log.Debug("starting html read");
             scProvider.Scrape(url);
             string html = scProvider.html;
-
+            log.Debug("html complete");
            
 
 
@@ -33,6 +40,12 @@ namespace ScoresPublisher
 
         public virtual void LocateRows(string html)
         {
+            //var match = Regex.Match(html, @">(\s+?)<");
+            //if (match.Groups.Count > 1)
+            //{
+            //    var v = match.Groups[1].Value;
+            //}
+
             var opt1 = html
                 .Split(new[] {"tname"}, StringSplitOptions.RemoveEmptyEntries)
                 .Where(x=>!x.StartsWith(" hidden-xs"))
@@ -52,7 +65,7 @@ namespace ScoresPublisher
                         .Split(new[] { 
                             "ntreduce", 
                             "hora", 
-                            //"timeresult",
+                                //"timeresult",
                             "background-color:white"}, StringSplitOptions.RemoveEmptyEntries)
                    )
                    
@@ -91,14 +104,14 @@ namespace ScoresPublisher
             {
 
                 string time_text = partiallyParsed[current++];
-                //string minuto_jornada = partiallyParsed[current++];
-                //if (!minuto_jornada.Contains("Minuto")
-                //   && !minuto_jornada.Contains("Descanso")
-                //    && !minuto_jornada.Contains("Jornada")  )
+                    //string minuto_jornada = partiallyParsed[current++];
+                    //if (!minuto_jornada.Contains("Minuto")
+                    //   && !minuto_jornada.Contains("Descanso")
+                    //    && !minuto_jornada.Contains("Jornada")  )
 
-                //{
-                //    current--;
-                //}
+                    //{
+                    //    current--;
+                    //}
                 string team1 = partiallyParsed[current++];
                 current++;
                 string team2 = partiallyParsed[current++];
@@ -129,11 +142,16 @@ namespace ScoresPublisher
 
         private void LogError(string p)
         {
-           
+            log.Error(p);
         }
 
         public static string ExtractText(string html)
         {
+            //var match = Regex.Match(html, @">(\s+?)<");
+            //if (match.Groups.Count > 1)
+            //{
+            //    var v = match.Groups[1].Value;
+            //}
             int start = html.IndexOf(">");
             int end = html.IndexOf("<", start + 1);
             string cleantext = html.Substring(start + 1, end - start - 1);
