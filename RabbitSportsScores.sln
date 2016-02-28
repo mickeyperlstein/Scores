@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScoresPublisher", "ScoresPu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonScores", "CommonScores\CommonScores.csproj", "{E0770E3E-8F47-443D-94F7-767C2D45CDC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{A36B5A71-5C2E-414F-AF6D-888B471D932F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{E0770E3E-8F47-443D-94F7-767C2D45CDC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0770E3E-8F47-443D-94F7-767C2D45CDC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0770E3E-8F47-443D-94F7-767C2D45CDC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A36B5A71-5C2E-414F-AF6D-888B471D932F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A36B5A71-5C2E-414F-AF6D-888B471D932F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A36B5A71-5C2E-414F-AF6D-888B471D932F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A36B5A71-5C2E-414F-AF6D-888B471D932F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
