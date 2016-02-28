@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\3rdParty\rabbitmq-dotnet-client-3.6.0-dotnet-4.5\bin\RabbitMQ.Client.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,7 +44,10 @@
   <ItemGroup>
     <Compile Include="ConsoleUtils.cs" />
     <Compile Include="GameDBO.cs" />
+    <Compile Include="ISharedStorageWriter.cs" />
+    <Compile Include="IStorageConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RabbitMQConnector.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

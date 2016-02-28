@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ScoresPublisher
+namespace DataLayer
 {
     public class GameDBO
     {   

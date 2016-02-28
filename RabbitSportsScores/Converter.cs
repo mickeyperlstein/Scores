@@ -1,14 +1,15 @@
-﻿using RabbitSportsScores.DB;
+﻿using DataLayer;
+using RabbitSportsScores.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RabbitSportsScores
+namespace DataLayer
 {
     class Converter
     {
-        internal static Game GameDBO_To_EntityGame(ScoresPublisher.GameDBO dbo)
+        internal static Game GameDBO_To_EntityGame(GameDBO dbo)
         {
             var game = new Game
             {

@@ -1,6 +1,7 @@
 ﻿using CommonScores;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using Storage.Rabbit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +15,29 @@ namespace ScoresPublisher
     {
         static void Main(string[] args)
         {
-            ConsoleUtils.Title("Games Scraper and PERSISTER");
 
+
+            ConsoleUtils.Title("Games Scraper and PERSISTER");
+            Console.WriteLine("Scraping initialized"); 
+            var sc = new Scraper(new SeleniumScrapper());
             while (true)
             {
 
-                var sc = new Scraper(new SeleniumScrapper());
+                Console.WriteLine("Scraping start");
                 sc.Scrape("http://futbolme.com/");
+                Console.WriteLine("Done Scraping");
                 var list = sc.Games;
-                var storage = new RabbitMQProvider();
+                var storage = new RabbitStorageWriter();
+                storage.Connect();
                 storage.PushedMessage += storage_PushedMessage;
-                storage.PushAll(list);
-                Console.WriteLine("Sleeping for 3 second");
-                Thread.Sleep(3000);
+                storage.WriteAll(list);
+                Console.WriteLine("Sleeping for 15 min");
+                Thread.Sleep(1000 * 60 * 15);
             }
 
         }
 
-        static void storage_PushedMessage(string arg1, IModel arg2)
+        static void storage_PushedMessage(string arg1, bool? saved)
         {
             Console.WriteLine("Sent : " + arg1);
         }

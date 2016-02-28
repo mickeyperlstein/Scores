@@ -1,9 +1,12 @@
 ﻿using CommonScores;
+using log4net.Config;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitSportsScores.DB;
-using ScoresPublisher;
+using Storage;
+using Storage.Entity;
+using Storage.Rabbit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,90 +19,38 @@ namespace RabbitSportsScores
     {
         static void Main(string[] args)
         {
-
-
+                    
             ConsoleUtils.Title("Listener and persister");
 
-            // Recieve rec = new Recieve("localhost","hello");
-
-            using (var db = new ScoresDBEntities())
+            EntityStorageWriter entityWriter = new EntityStorageWriter();
+            entityWriter.Connect();
+            entityWriter.PushedMessage += (msg, saved) =>
             {
-                //var game =
-                //    new Game
-                //{
-                //    CompetitionName = "name1",
-                //    MatchStart = DateTime.Now,
+                Console.WriteLine(" [x] Received {0}", msg);
+             
+                if (saved.HasValue && saved.Value==false)
+                    Console.WriteLine("DISCARDED DATA");
+            
+            };
 
-                //    LastUpdatedOn = DateTime.UtcNow
-                //    ,
-                //    Team1 = "team1",
-                //    Team2 = "team2",
-                //    SportType = "soccer"
-                  
-                //};
+            ISharedStorageReader storageReader = new RabbitStorageReader();
+            storageReader.Connect();
 
-            var factory = new ConnectionFactory() { HostName = "localhost" };
-            using (var connection = factory.CreateConnection())
+            storageReader.RecievedMessage += (json) =>
             {
-                using (var channel = connection.CreateModel())
-                {
-                    string queueName = "hello";
-                    DeclareQueu(queueName, channel);
+                entityWriter.WriteOne(json);
+            };
+          
+            
 
-                    var consumer = new EventingBasicConsumer(channel);
-                    consumer.Received += (model, ea) =>
-                    {
-                        var body = ea.Body;
-                        var json = Encoding.UTF8.GetString(body);
-
-
-                        var dbo = JsonConvert.DeserializeObject<GameDBO>(json);
-                        
-                        var g = Converter.GameDBO_To_EntityGame(dbo);
-                        
-                        if (!db.IsGamePersisted(g))
-                        {
-                                                 
-                            db.Games.Add(g);
-                            
-                            Console.WriteLine(" [x] Received {0}", json);
-                            db.SaveChanges();
-                            Console.WriteLine("New Id = {0}", g.Id);
-                        }
-
-                        
-                        
-                        
-                    };
-
-                    channel.BasicConsume(queue: queueName,
-                                         noAck: true,
-                                         consumer: consumer);
-
-                    Console.WriteLine(" Press [enter] to exit.");
-                    Console.ReadLine();
-
-
-                }
-
-               
-            }
+           
             }
 
         }
 
-
+       
    
 
-        private static void DeclareQueu(string queueName, IModel channel)
-        {
-            channel.QueueDeclare(queue: queueName,
-                                 durable: false,
-                                 exclusive: false,
-                                 autoDelete: false,
-                                 arguments: null);
-
-
-        }
-    }
+       
+    
 }
